@@ -1,6 +1,7 @@
 #cs ----------------------------------------------------------------------------
 
  AutoIt Version: 3.3.8.1
+ Script Version: 1.0.1
  Author:         Scorpio
 
  Script Function:
@@ -37,7 +38,10 @@ Func _ClearEventLog()
 	While True
 		$Line = FileReadLine($List)
 		If @Error = -1 Then ExitLoop
-		ConsoleWrite('Deleting Events Log: ' & $Line & @CRLF)
+
+		RunWait(@ComSpec & ' /c wevtutil.exe clear-log "' & $Line & '"', @SystemDir, @SW_HIDE)
+		If @Error Then ConsoleWrite('An Error as ocurred Deleting the Log: ' & $Line & @CRLF)
+
 		Sleep(100)
 	WEnd
 
